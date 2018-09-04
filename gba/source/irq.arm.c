@@ -3,12 +3,12 @@
 #include "dump.thumb.h"
 
 IWRAM_CODE void irqSerialHandler() {
-    //REG_IME = 0;
-    // u16 flag = REG_IF; 
+    REG_IME = 0;
+    u16 flag = REG_IF; 
     REG_SIODATA32 = dumpStep();
 	REG_SIOCNT = SIO_IRQ | SIO_32BIT | SIO_START;
-    // REG_IF = flag;
-    // REG_IME = 1;
+    REG_IF = flag;
+    REG_IME = 1;
 } // irqSerialHandler
 //---------------------------------------------------------------------------
 // void IrqInit(void) {

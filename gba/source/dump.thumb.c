@@ -70,7 +70,7 @@ void dumpResetCRC() {
 u32 dumpCalcCRC(u32 data) {
     u32 i;
     for (i = 0; i < 32; i++) {
-        if ((dump.crc & data) & 0x01) {
+        if ((dump.crc ^ data) & 0x01) {
             dump.crc >>= 1;
             dump.crc ^= 0x0000c37b;
         } else {
