@@ -3,8 +3,8 @@
 #include "spi_util.h"
 #include "multiboot.h"
 
-char default_mb = "../gba/gba_dump_mb.gba"
-char default_dest = "../rom.bin"
+char default_mb[] = "../gba/gba_dump_mb.gba"
+char default_dest[] = "../rom.bin"
 
 static uint32_t crc_mem;
 
