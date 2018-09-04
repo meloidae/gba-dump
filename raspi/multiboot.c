@@ -7,14 +7,14 @@
 #define SLEEP_DURATION 10000
 
 
-void multiboot(const char *mb_filename) {
+int multiboot(const char *mb_filename) {
 
     // Open gba file to multiboot
     FILE *fp = fopen(mb_filename, "rb");
 
     if (fp == NULL) {
-        fprintf(stderr, "Failed to open file: %s", mb_filename);
-        exit(1);
+        fprintf(stderr, "Failed to open file: %s\n", mb_filename);
+        return -1;
     } // if
 
     // Measure file size (should be < 256kb)
@@ -23,8 +23,8 @@ void multiboot(const char *mb_filename) {
 
     printf("file_size=%d\n", file_size);
     if (file_size > 0x40000) {
-        fprintf(stderr, "File too big: max file size is 256kb");
-        exit(1);
+        fprintf(stderr, "File too big: max file size is 256kb\n");
+        return -1;
     } // if
 
     // Set fp back to the beginning of file
@@ -117,4 +117,5 @@ void multiboot(const char *mb_filename) {
     fprintf(stdout, "CRC ...hope they match!\n");
     fprintf(stdout, "MulitBoot done\n");
 
+    return 0;
 } // multiboot
