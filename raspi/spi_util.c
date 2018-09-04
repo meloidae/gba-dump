@@ -37,7 +37,7 @@ uint32_t waitSPI32(uint32_t write_bits, uint32_t compare_bits, uint32_t sleep_us
     while (1) {
         read_bits = writeSPI32NoMessage(write_bits);
         if (read_bits != compare_bits) {
-            fprintf(stdout, "%s 0x%08x\n", "read_bits:", read_bits); 
+            // fprintf(stdout, "%s 0x%08x\n", "read_bits:", read_bits); 
             usleep(sleep_us);
             continue;
         } // if
