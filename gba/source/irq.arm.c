@@ -1,7 +1,4 @@
-#include <gba_sio.h>
-#include <gba_types.h>
-#include <gba_video.h>
-#include <gba_interrupt.h>
+#include <gba.h>
 #include "irq.arm.h"
 #include "dump.thumb.h"
 

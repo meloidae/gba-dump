@@ -1,6 +1,4 @@
-#include <gba_console.h>
-#include <gba_types.h>
-#include <gba_base.h>
+#include <gba.h>
 #include <string.h>
 #include <stdio.h>
 #include "dump.thumb.h"
