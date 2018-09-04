@@ -6,6 +6,8 @@
 #include "irq.arm.h"
 
 int main() {
+	// REG_WSCNT = 0x4018;
+	//IrqInit();
     irqInit();
     irqSet(IRQ_SERIAL, irqSerialHandler);
     irqEnable(IRQ_VBLANK | IRQ_SERIAL);
