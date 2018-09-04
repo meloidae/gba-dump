@@ -87,11 +87,11 @@ u32 dumpCalcCRC(u32 data) {
 void dumpPrintInfo(void) {
 	iprintf("\x1b[0;0HGBA ROM Dumper\n");
 
-    iprintf("\x1b[0;2H size       = 0x%08lx", dump.size);
-    iprintf("\x1b[0;3H size_crc   = 0x%04lx", dump.size_crc);
+    iprintf("\x1b[2;0H size       = 0x%08lx", dump.size);
+    iprintf("\x1b[3;0H size_crc   = 0x%04lx", dump.size_crc);
 
-    iprintf("\x1b[0;5H send_count = 0x%08lx", dump.send_count);
-    iprintf("\x1b[0;6H data_crc   = 0x%04lx", dump.data_crc);
+    iprintf("\x1b[5;0H send_count = 0x%08lx", dump.send_count);
+    iprintf("\x1b[6;0H data_crc   = 0x%04lx", dump.data_crc);
 } // dumpPrintInfo
 
 
