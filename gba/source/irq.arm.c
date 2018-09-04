@@ -3,9 +3,9 @@
 #include <gba_video.h>
 #include <gba_interrupt.h>
 #include "irq.arm.h"
-#include "dump.h"
+#include "dump.thumb.h"
 
-void irqSerialHandler() {
+IWRAM_CODE void irqSerialHandler() {
     //REG_IME = 0;
     // u16 flag = REG_IF; 
     REG_SIODATA32 = dumpStep();

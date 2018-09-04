@@ -3,7 +3,7 @@
 #include <gba_base.h>
 #include <string.h>
 #include <stdio.h>
-#include "dump.h"
+#include "dump.thumb.h"
 
 DumpHolder dump;
 

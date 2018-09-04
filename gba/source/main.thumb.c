@@ -2,7 +2,7 @@
 #include <gba_console.h>
 #include <gba_systemcalls.h>
 
-#include "dump.h"
+#include "dump.thumb.h"
 #include "irq.arm.h"
 
 int main() {
