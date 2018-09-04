@@ -1,57 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <wiringPi.h>
+#include "spi_util.h"
+#include "multiboot.h"
 
 #define SLEEP_DURATION 10000
 
-uint32_t writeSPI32NoMessage(uint32_t write_bits) {
-    uint8_t buffer[4];
 
-    // Construct bits to write
-    buffer[3] = write_bits & 0x000000ff;
-    buffer[2] = (write_bits & 0x0000ff00) >> 8;
-    buffer[1] = (write_bits & 0x00ff0000) >> 16;
-    buffer[0] = (write_bits & 0xff000000) >> 24;
-
-    // write/read
-    wiringPiSPIDataRW(0, &buffer, 4);
-
-    uint32_t read_bits = 0;
-    read_bits |= buffer[0] << 24;
-    read_bits |= buffer[1] << 16;
-    read_bits |= buffer[2] << 8;
-    read_bits |= buffer[3];
-
-    return read_bits;
-} // writeSPI32NoMessage
-
-uint32_t writeSPI32(uint32_t write_bits, char *message) {
-    uint32_t read_bits = writeSPI32NoMessage(write_bits);
-
-    fprintf(stdout, "sent: 0x%08x, received: 0x%08x; %s\n", write_bits, read_bits, message);
-
-    return read_bits;
-} // writeSPI32
-
-uint32_t waitSPI32(uint32_t write_bits, uint32_t compare_bits, char *message) {
-    fprintf(stdout, "%s 0x%08x\n", message, compare_bits); 
-    uint32_t read_bits;
-
-    do {
-        read_bits = writeSPI32NoMessage(write_bits);
-        usleep(SLEEP_DURATION);
-    } while(read_bits != compare_bits);
-} // waitSPI32
-
-
-
-int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "Please provide the location of multiboot gba file");
-        exit(1);
-    } // if
-    char *mb_filename = argv[1];
+void multiboot(const char *mb_filename) {
 
     // Open gba file to multiboot
     FILE *fp = fopen(mb_filename, "rb");
@@ -82,7 +38,7 @@ int main(int argc, char *argv[]) {
     wiringPiSPISetupMode(0, 256000, 3);
     
     // Wait until GBA returns slave info
-    waitSPI32(0x00006202, 0x72026202, "Looking for GBA");
+    waitSPI32(0x00006202, 0x72026202, SLEEP_DURATION, "Looking for GBA");
 
     read_bits = writeSPI32(0x00006202, "Found GBA");
     read_bits = writeSPI32(0x00006102, "Recognition OK");
@@ -153,7 +109,7 @@ int main(int argc, char *argv[]) {
         f >>= 1;
     } // for
 
-    waitSPI32(0x00000065, 0x00750065, "Wait for GBA to respond with CRC");
+    waitSPI32(0x00000065, 0x00750065, SLEEP_DURATION, "Wait for GBA to respond with CRC");
 
     read_bits = writeSPI32(0x00000066, "GBA ready with CRC");
     read_bits = writeSPI32(c, "Let's exchange CRC!");
@@ -161,4 +117,4 @@ int main(int argc, char *argv[]) {
     fprintf(stdout, "CRC ...hope they match!\n");
     fprintf(stdout, "MulitBoot done\n");
 
-} // main
+} // multiboot
