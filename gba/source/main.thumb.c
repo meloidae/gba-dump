@@ -7,12 +7,12 @@
 
 int main() {
     REG_WAITCNT = 0x0317;
+    dumpInit();
 	IrqInit();
     // irqInit();
     // irqSet(IRQ_SERIAL, irqSerialHandler);
     // irqEnable(IRQ_VBLANK | IRQ_SERIAL);
 
-    dumpInit();
     consoleDemoInit();
 
     while (1) {
