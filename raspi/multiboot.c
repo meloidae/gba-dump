@@ -65,8 +65,8 @@ int multiboot(const char *mb_filename) {
     read_bits = writeSPI32((((read_bits >> 16) + 0xf) & 0xff) | 0x00006400, "Send handshake data");
     read_bits = writeSPI32((file_size - 0x190) / 4, "Send length info, receive seed 0x**cc****");
 
-	uint32_t f = (((read_bits & 0x00ff0000) >> 8) + hh) | 0xffff0000; // chkfin
-	uint32_t c = 0x0000c387; // chksum
+    uint32_t f = (((read_bits & 0x00ff0000) >> 8) + hh) | 0xffff0000; // chkfin
+    uint32_t c = 0x0000c387; // chksum
     uint32_t x = 0x0000c37b; // chkxor
     uint32_t k = 0x43202f2f; // keyxor
 
